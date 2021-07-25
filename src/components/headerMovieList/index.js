@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    color: "rgb(4, 79, 149)",
     display: "flex",
     justifyContent: "space-around",
     flexWrap: "wrap",

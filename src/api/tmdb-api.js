@@ -80,4 +80,14 @@ export const getTopRatedMovies = async () => {
   return response.json();
 };
 
-
+export const getVoteAvgMovies = async () => {
+  const response = await fetch(
+    "https://api.themoviedb.org/3/discover/movie?api_key=" +
+    process.env.REACT_APP_TMDB_KEY +
+    "&vote_average.gte=2.0&vote_average.lte=8.0"
+  )
+  if (!response.ok) {
+    throw new Error(response.json().message);
+  }
+  return response.json();
+};
