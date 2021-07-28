@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SiteHeader from "./components/siteHeader";
+import LoginPage from "./pages/loginPage";
+import signUpForm from "./components/signUpForm";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -13,6 +15,8 @@ import PlaylistMoviesPage from "./pages/playlistMoviesPage";
 import TopRatedMovies from "./pages/topRatedMovies";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import MoviesContextProvider from "./contexts/moviesContext";
+import signUpPage from "./pages/signUpPage";
+
 
 /* Query Client will manage the cache in the browser */
 const queryClient = new QueryClient({
@@ -35,6 +39,9 @@ const App = () => {
         <SiteHeader />
         <MoviesContextProvider>
           <Switch>
+          <Route exact path="/" component={signUpPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/signup" component={signUpPage} />
           <Route exact path="/reviews/form" component={AddMovieReviewPage} />
           <Route path="/reviews/:id" component={movieReviewPage} />
           <Route exact path="/movies/upcoming" component={UpcomingMoviesPage} />
@@ -42,7 +49,8 @@ const App = () => {
           <Route exact path="/movies/topRatedMovies" component={TopRatedMovies} />
           <Route exact path="/movies/playlist" component={PlaylistMoviesPage} />
           <Route path="/movies/:id" component={MoviePage} />
-          <Route path="/" component={HomePage} />
+          <Route path="/home" component={HomePage} />
+
           <Redirect from="*" to="/" />
         </Switch>
         </MoviesContextProvider>
