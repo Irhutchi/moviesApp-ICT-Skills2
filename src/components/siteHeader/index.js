@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
-
 import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
@@ -20,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
 }));
 
-const SiteHeader = ( { history, loggedIn }) => {
+const SiteHeader = ( {history}, props ) => {
     const classes = useStyles();
+    const[auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const theme = useTheme();
@@ -29,26 +29,29 @@ const SiteHeader = ( { history, loggedIn }) => {
 
     let menuOptions;
 
-    loggedIn ? (
+
       menuOptions = [
-        { label: "Home", path: "/" },
+        { label: "Home", path: "/home" },
         { label: "Upcoming", path: "/movies/upcoming" },
         { label: "Favorites", path: "/movies/favorites" },
         { label: "Top Rated", path: "/movies/topRatedMovies" },
         { label: "PlayList", path: "/movies/playlist" },
         { label: "Kids", path: "/" },
-      ]) : (  menuOptions = [
-      { label: "signup", path: "/signup" },
-      { label: "login", path: "/login" },
-    ]);
+      ];
   
     const handleMenuSelect = (pageURL) => {
       history.push(pageURL);
     };
-  
+
     const handleMenu = (event) => {
       setAnchorEl(event.currentTarget);
-    };
+  };
+
+    const handleClose = () => {
+      localStorage.removeItem('user');
+      props.setUserState();
+      setAnchorEl(null);
+    }
   
     return (
       <>
@@ -60,8 +63,10 @@ const SiteHeader = ( { history, loggedIn }) => {
             <Typography variant="h6" className={classes.title}>
               Explore movies and TV shows
             </Typography>
-              {isMobile ? (
-                <>
+            { auth && (
+               <div>
+                   {isMobile ? (
+                  <>
                   <IconButton
                     aria-label="menu"
                     aria-controls="menu-appbar"
@@ -84,8 +89,8 @@ const SiteHeader = ( { history, loggedIn }) => {
                       horizontal: "right",
                     }}
                     open={open}
-                    onClose={() => setAnchorEl(null)}
-                  >
+                    onClose={handleClose}
+                    >
                     {menuOptions.map((opt) => (
                       <MenuItem
                         key={opt.label}
@@ -94,9 +99,10 @@ const SiteHeader = ( { history, loggedIn }) => {
                         {opt.label}
                       </MenuItem>
                     ))}
+                    <MenuItem onClick={handleClose}>Logout</MenuItem>
                   </Menu>
                 </>
-              ) : (
+               ) : (
                 <>
                   {menuOptions.map((opt) => (
                     <Button
@@ -108,7 +114,11 @@ const SiteHeader = ( { history, loggedIn }) => {
                     </Button>
                   ))}
                 </>
+               
               )}
+               </div>
+            
+            )}
           </Toolbar>
         </AppBar>
         <div className={classes.offset} />
