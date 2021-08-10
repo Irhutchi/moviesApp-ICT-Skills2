@@ -5,7 +5,7 @@ import MoviesContextProvider from "../contexts/moviesContext";
 
 
 export default {
-  title: "Landing Page/LoginCard",
+  title: "Authentication/LoginCard",
   component: LoginForm,
   decorators: [
     (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,

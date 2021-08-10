@@ -1,13 +1,12 @@
 import React from "react";
-import SignUpForm from "../components/signUpForm";
+import PaginationFilter from "../components/pagination"
 import { MemoryRouter } from "react-router";
 import MoviesContextProvider from "../contexts/moviesContext";
 
 
-
 export default {
-  title: "Authentication/SignUpCard",
-  component: SignUpForm,
+  title: "Home Page/Pagination",
+  component: PaginationFilter,
   decorators: [
     (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
     (Story) => <MoviesContextProvider>{Story()}</MoviesContextProvider>,
@@ -16,7 +15,7 @@ export default {
 
 export const Basic = () => {
   return (
-    <SignUpForm/>
+    <PaginationFilter/>
   );
 };
 Basic.storyName = "Default";
