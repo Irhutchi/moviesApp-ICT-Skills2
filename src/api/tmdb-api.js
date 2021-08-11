@@ -4,6 +4,7 @@ export const getMovies = async ( args ) => {
    const response = await fetch(
      `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
    );
+   console.log(response);
    if (!response.ok) {
      throw new Error(response.json().message);
    }
@@ -60,9 +61,11 @@ export const getMovieReviews = (id) => {
 };
 
 
-export const getUpcomingMovies = async () => {
-  const response = await fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}`
+export const getUpcomingMovies = async ( args ) => {
+   // eslint-disable-next-line no-unused-vars
+   const [prefix, { page }] = args.queryKey;
+   const response = await fetch(
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&page=${page}`
   )
   if (!response.ok) {
     throw new Error(response.json().message);
@@ -78,6 +81,7 @@ export const getTopRatedMovies = async (args) => {
     process.env.REACT_APP_TMDB_KEY +
     `&language=en-US&page=${page}`
   )
+  console.log(response);
   if (!response.ok) {
     throw new Error(response.json().message);
   }

@@ -38,7 +38,7 @@ const App = () => {
         <SiteHeader />
         <MoviesContextProvider>
           <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/" component={AuthenticationPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/signup" component={SignUpForm} />
           <Route exact path="/reviews/form" component={AddMovieReviewPage} />
