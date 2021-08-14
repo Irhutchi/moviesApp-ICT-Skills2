@@ -4,7 +4,7 @@ import FilterCard from "../filterMoviesCard";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import MovieList from "../movieList";
-
+import Scroll from "../scroll";
 const useStyles = makeStyles({
   root: {
     padding: "20px",
@@ -46,6 +46,7 @@ function MovieListPageTemplate({ movies, title, action }) {
         </Grid>
         <MovieList action={action} movies={displayedMovies}></MovieList>
       </Grid>
+      <Scroll showBelow={250} />
     </Grid>
   );
 }

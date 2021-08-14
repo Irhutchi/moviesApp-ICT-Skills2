@@ -41,10 +41,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieDetails = ({ movie, credits }) => {
+const MovieDetails = ({ movie, credits, trailer }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [video, setVideo] = useState();
 
   let castMembers = credits.cast;
   castMembers = castMembers.slice(0, 9);
@@ -74,6 +73,28 @@ const MovieDetails = ({ movie, credits }) => {
         ))}
       </Paper>
       <Paper component="ul" className={classes.root}>
+        <li>
+          <Chip label="Cast" className={classes.chip} color="primary" />
+        </li>
+        {/* loop over the acotrs */}
+        {castMembers.map((a) => (
+          <li key={a.name}>
+            <Chip
+              avatar={
+                <Avatar
+                  alt={a.name}
+                  src={`https://image.tmdb.org/t/p/w300${a.profile_path}`}
+                />
+              }
+              label={a.name}
+              className={classes.chip}
+              onClick={handleClick}
+            />
+          </li>
+        ))}
+      </Paper>
+
+      <Paper component="ul" className={classes.root}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
           icon={<MonetizationIcon />}
@@ -100,35 +121,13 @@ const MovieDetails = ({ movie, credits }) => {
           </li>
         ))}
       </Paper>
-
-      <Paper component="ul" className={classes.root}>
-        <li>
-          <Chip label="Cast" className={classes.chip} color="primary" />
-        </li>
-        {/* loop over the acotrs */}
-        {castMembers.map((a) => (
-          <li key={a.name}>
-            <Chip
-              avatar={
-                <Avatar
-                  alt={a.name}
-                  src={`https://image.tmdb.org/t/p/w300${a.profile_path}`}
-                />
-              }
-              label={a.name}
-              className={classes.chip}
-              onClick={handleClick}
-            />
-          </li>
-        ))}
-      </Paper>
       <Button
         className={classes.youtube}
         variant="contained"
         startIcon={<YouTubeIcon />}
         color="secondary"
-        target="__blank"
-        href={`https://www.youtube.com/watch?v=${video}`}
+        target=""
+        href={`https://www.youtube.com/watch?v=${trailer}`}
       >
         Watch the Trailer
       </Button>
