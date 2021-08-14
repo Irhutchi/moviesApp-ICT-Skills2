@@ -16,6 +16,7 @@ import PlaylistMoviesPage from "./pages/playlistMoviesPage";
 import TopRatedMovies from "./pages/topRatedMovies";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import MoviesContextProvider from "./contexts/moviesContext";
+import ActorBiographyPage from "./pages/actorBiographyPage";
 
 /* Query Client will manage the cache in the browser */
 const queryClient = new QueryClient({
@@ -49,6 +50,7 @@ const App = () => {
           <Route exact path="/movies/playlist" component={PlaylistMoviesPage} />
           <Route path="/movies/:id" component={MoviePage} />
           <Route path="/home" component={HomePage} />
+          <Route path="/actor" component={ActorBiographyPage} />
 
           <Redirect from="*" to="/" />
         </Switch>

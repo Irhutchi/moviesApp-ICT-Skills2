@@ -13,6 +13,7 @@ import Drawer from "@material-ui/core/Drawer";
 import MovieReviews from "../movieReviews";
 import { Button } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,15 +42,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieDetails = ({ movie, credits, trailer }) => {
+const MovieDetails = ({ movie, credits }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
-
+  const history = useHistory();
+  const [video, setVideo] = useState();
   let castMembers = credits.cast;
   castMembers = castMembers.slice(0, 9);
 
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
+  const handleClick = (actor) => {
+    history.push("/actor");
   };
 
   return (
@@ -76,7 +78,7 @@ const MovieDetails = ({ movie, credits, trailer }) => {
         <li>
           <Chip label="Cast" className={classes.chip} color="primary" />
         </li>
-        {/* loop over the acotrs */}
+        {/* loop over the actors */}
         {castMembers.map((a) => (
           <li key={a.name}>
             <Chip
@@ -127,7 +129,7 @@ const MovieDetails = ({ movie, credits, trailer }) => {
         startIcon={<YouTubeIcon />}
         color="secondary"
         target=""
-        href={`https://www.youtube.com/watch?v=${trailer}`}
+        href={`https://www.youtube.com/watch?v=${video}`}
       >
         Watch the Trailer
       </Button>
