@@ -6,14 +6,16 @@ import { getMovie } from "../api/tmdb-api";
 import { withRouter } from "react-router-dom";
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner';
+import { getMovieCredits } from "../api/tmdb-api";
 
 const MovieDetailsPage = (props) => {
   //const id allows the component to extract the movie id from the browser's parameterized URL address
   const { id } = props.match.params;
 
+   const credits = useQuery(["credits", { id: id }],getMovieCredits);
+
   const { data: movie, error, isLoading, isError } = useQuery(
-    ["movie", { id: id }],
-    getMovie
+    ["movie", { id: id }], getMovie,
   );
 
   if (isLoading) {
@@ -24,13 +26,13 @@ const MovieDetailsPage = (props) => {
     return <h1>{error.message}</h1>;
   }
 
-  //In the below  code the children prop will be bound to: <MovieDetails movie={movie} />
+  //In the below code the children prop will be bound to: <MovieDetails movie={movie} />
   return (
     <>
-      {movie ? (
+      {movie && credits ? (
         <>
-          <PageTemplate movie={movie}>
-            <MovieDetails movie={movie} />
+          <PageTemplate movie={movie} credits={credits.data}>
+            <MovieDetails movie={movie} credits={credits.data}/>
           </PageTemplate>
         </>
       ) : (

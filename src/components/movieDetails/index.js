@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Chip from "@material-ui/core/Chip";
+import { Avatar } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import MonetizationIcon from "@material-ui/icons/MonetizationOn";
@@ -10,6 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MovieReviews from "../movieReviews";
+import { Button } from "@material-ui/core";
+import YouTubeIcon from "@material-ui/icons/YouTube";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,11 +31,27 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
+  youtube: {
+    display: "flex",
+    justifyContent: "center",
+    padding: theme.spacing(1.5),
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
-const MovieDetails = ({ movie }) => {
+const MovieDetails = ({ movie, credits }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [video, setVideo] = useState();
+
+  let castMembers = credits.cast;
+  castMembers = castMembers.slice(0, 9);
+
+  const handleClick = () => {
+    console.info("You clicked the Chip.");
+  };
 
   return (
     <>
@@ -81,6 +100,39 @@ const MovieDetails = ({ movie }) => {
           </li>
         ))}
       </Paper>
+
+      <Paper component="ul" className={classes.root}>
+        <li>
+          <Chip label="Cast" className={classes.chip} color="primary" />
+        </li>
+        {/* loop over the acotrs */}
+        {castMembers.map((a) => (
+          <li key={a.name}>
+            <Chip
+              avatar={
+                <Avatar
+                  alt={a.name}
+                  src={`https://image.tmdb.org/t/p/w300${a.profile_path}`}
+                />
+              }
+              label={a.name}
+              className={classes.chip}
+              onClick={handleClick}
+            />
+          </li>
+        ))}
+      </Paper>
+      <Button
+        className={classes.youtube}
+        variant="contained"
+        startIcon={<YouTubeIcon />}
+        color="secondary"
+        target="__blank"
+        href={`https://www.youtube.com/watch?v=${video}`}
+      >
+        Watch the Trailer
+      </Button>
+
       <Fab
         color="secondary"
         variant="extended"
