@@ -50,7 +50,7 @@ const App = () => {
           <Route exact path="/movies/playlist" component={PlaylistMoviesPage} />
           <Route path="/movies/:id" component={MoviePage} />
           <Route path="/home" component={HomePage} />
-          <Route path="/actor" component={ActorBiographyPage} />
+          <Route path="/actor/:id" component={ActorBiographyPage} />
 
           <Redirect from="*" to="/" />
         </Switch>

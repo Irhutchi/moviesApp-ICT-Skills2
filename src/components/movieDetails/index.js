@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Chip from "@material-ui/core/Chip";
-import { Avatar } from "@material-ui/core";
+import { Avatar, CardContent, CardMedia } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import MonetizationIcon from "@material-ui/icons/MonetizationOn";
@@ -14,6 +14,8 @@ import MovieReviews from "../movieReviews";
 import { Button } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import { useHistory } from "react-router-dom";
+import { Grid } from "@material-ui/core";
+import ActorCard from "../actorCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,10 +50,10 @@ const MovieDetails = ({ movie, credits }) => {
   const history = useHistory();
   const [video, setVideo] = useState();
   let castMembers = credits.cast;
-  castMembers = castMembers.slice(0, 9);
+  castMembers = castMembers.slice(0, 8);
 
   const handleClick = (actor) => {
-    history.push("/actor");
+    history.push(`/actor/${actor.id}`);
   };
 
   return (
@@ -74,28 +76,6 @@ const MovieDetails = ({ movie, credits }) => {
           </li>
         ))}
       </Paper>
-      <Paper component="ul" className={classes.root}>
-        <li>
-          <Chip label="Cast" className={classes.chip} color="primary" />
-        </li>
-        {/* loop over the actors */}
-        {castMembers.map((a) => (
-          <li key={a.name}>
-            <Chip
-              avatar={
-                <Avatar
-                  alt={a.name}
-                  src={`https://image.tmdb.org/t/p/w300${a.profile_path}`}
-                />
-              }
-              label={a.name}
-              className={classes.chip}
-              onClick={handleClick}
-            />
-          </li>
-        ))}
-      </Paper>
-
       <Paper component="ul" className={classes.root}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
@@ -123,6 +103,14 @@ const MovieDetails = ({ movie, credits }) => {
           </li>
         ))}
       </Paper>
+      <Grid container spacing={2} onClick={handleClick}>
+        {/* loop over the actors */}
+        {castMembers.map((actor) => (
+          <Grid item key={actor.name} xs={12} md={6} lg={3}>
+            <ActorCard actor={actor} />
+          </Grid>
+        ))}
+      </Grid>
       <Button
         className={classes.youtube}
         variant="contained"
