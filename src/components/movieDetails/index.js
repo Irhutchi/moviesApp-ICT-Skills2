@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Chip from "@material-ui/core/Chip";
-import { Avatar, CardContent, CardMedia } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import MonetizationIcon from "@material-ui/icons/MonetizationOn";
@@ -49,6 +48,7 @@ const MovieDetails = ({ movie, credits }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const history = useHistory();
   const [video, setVideo] = useState();
+  
   let castMembers = credits.cast;
   castMembers = castMembers.slice(0, 8);
 
@@ -62,7 +62,7 @@ const MovieDetails = ({ movie, credits }) => {
         Overview
       </Typography>
 
-      <Typography variant="h6" component="p">
+      <Typography variant="body1" component="p">
         {movie.overview}
       </Typography>
 
@@ -103,10 +103,10 @@ const MovieDetails = ({ movie, credits }) => {
           </li>
         ))}
       </Paper>
-      <Grid container spacing={2} onClick={handleClick}>
+      <Grid container className={classes.root} spacing={2}>
         {/* loop over the actors */}
         {castMembers.map((actor) => (
-          <Grid item key={actor.name} xs={12} md={6} lg={3}>
+          <Grid item key={actor.name} onClick={()=> handleClick(actor)} xs={12} sm={6} md={4} lg={3} xl={2}>
             <ActorCard actor={actor} />
           </Grid>
         ))}
