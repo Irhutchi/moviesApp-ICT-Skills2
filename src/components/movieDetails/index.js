@@ -43,14 +43,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieDetails = ({ movie, credits }) => {
+const MovieDetails = ({ movie, credits, video }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const history = useHistory();
-  const [video, setVideo] = useState();
+  //const [video, setVideo] = useState();
   
   let castMembers = credits.cast;
   castMembers = castMembers.slice(0, 8);
+
+  //let videos = video.id;
 
   const handleClick = (actor) => {
     history.push(`/actor/${actor.id}`);
@@ -117,7 +119,7 @@ const MovieDetails = ({ movie, credits }) => {
         startIcon={<YouTubeIcon />}
         color="secondary"
         target=""
-        href={`https://www.youtube.com/watch?v=${video}`}
+        href={`https://www.youtube.com/watch?v=${video.results[0].key}`}
       >
         Watch the Trailer
       </Button>

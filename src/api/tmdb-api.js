@@ -49,7 +49,9 @@ export const getMovieImages = async ({queryKey}) => {
   return response.json();
 };
 
-export const getMovieTrailer = async (id) => {
+export const getMovieTrailer= async (args) => {
+   // eslint-disable-next-line no-unused-vars
+   const [prefix, { id }] = args.queryKey;
    const response = await fetch(
      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US`
    )
