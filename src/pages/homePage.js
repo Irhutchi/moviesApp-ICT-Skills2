@@ -6,10 +6,7 @@ import Spinner from "../components/spinner";
 import { getMovies } from "../api/tmdb-api";
 import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 import Pagination from "@material-ui/lab/Pagination";
-/*
-  The useQuery hook uses the second argument (getMovies) to perform the HTTP request; 
-  The first argument is used as the cache entry key
-*/
+import SiteHeader from "../components/siteHeader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +24,10 @@ const HomePage = (props) => {
   const handlePageChange = (event, value) => {
     setPage(value);
   };
+  /*
+  The useQuery hook uses the second argument (getMovies) to perform the HTTP request; 
+  The first argument is used as the cache entry key
+  */
 
   const { data, error, isLoading, isError } = useQuery(
     ["discover", { page: page }],
@@ -48,6 +49,7 @@ const HomePage = (props) => {
 
   return (
     <>
+      <SiteHeader loggedIn={true} />
       <PageTemplate
         title="Discover Movies"
         movies={movies}

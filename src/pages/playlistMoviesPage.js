@@ -3,12 +3,13 @@ import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
-import Spinner from '../components/spinner';
+import Spinner from "../components/spinner";
 import RemoveFromPlaylist from "../components/cardIcons/removeFromPlaylist";
 import WriteReview from "../components/cardIcons/writeReview";
+import SiteHeader from "../components/siteHeader";
 
 const PlaylistMoviesPage = () => {
-  const {playlist: movieIds } = useContext(MoviesContext);
+  const { playlist: movieIds } = useContext(MoviesContext);
 
   // Create an array of queries and run in parallel.
   const playlistMovieQueries = useQueries(
@@ -34,11 +35,12 @@ const PlaylistMoviesPage = () => {
       action={(movie) => {
         return (
           <>
+            <SiteHeader loggedIn={true} />
             <RemoveFromPlaylist movie={movie} />
             <WriteReview movie={movie} />
           </>
         );
-      }} 
+      }}
     />
   );
 };

@@ -6,10 +6,7 @@ import Spinner from "../components/spinner";
 import { getTopRatedMovies } from "../api/tmdb-api";
 import AddToPlaylistIcon from "../components/cardIcons/addToPlaylist";
 import Pagination from "@material-ui/lab/Pagination";
-/*
-  The useQuery hook uses the second argument (getMovies) to perform the HTTP request; 
-  The first argument is used as the cache entry key
-*/
+import SiteHeader from "../components/siteHeader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +24,11 @@ const TopRatedMovies = (props) => {
   const handlePageChange = (event, value) => {
     setPage(value);
   };
+
+  /*
+  The useQuery hook uses the second argument (getMovies) to perform the HTTP request; 
+  The first argument is used as the cache entry key
+  */
 
   const { data, error, isLoading, isError } = useQuery(
     ["topRatedMovies", { page: page }],
@@ -48,6 +50,7 @@ const TopRatedMovies = (props) => {
 
   return (
     <>
+      <SiteHeader loggedIn={true} />
       <PageTemplate
         title="Top Rated Movies"
         movies={movies}

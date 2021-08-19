@@ -6,6 +6,7 @@ import Spinner from "../components/spinner";
 import { useQuery } from "react-query";
 import AddToPlaylistIcon from "../components/cardIcons/addToPlaylist";
 import Pagination from "@material-ui/lab/Pagination";
+import SiteHeader from "../components/siteHeader";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +48,7 @@ const UpcomingMoviesPage = (props) => {
 
   return (
     <>
+    <SiteHeader loggedIn={true} />
       <PageTemplate
         title="Upcoming Movies"
         movies={movies}

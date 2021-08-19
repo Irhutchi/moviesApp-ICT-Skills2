@@ -52,7 +52,7 @@ const LoginForm = (props) => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-
+  //provide unique css to scaleloader spinner  
   const override = `
     display: block;
     margin-left: 100px;
@@ -75,7 +75,9 @@ const LoginForm = (props) => {
   const handleLogin = (e) => {
       e.preventDefault();
       setLoading(true);
+      //get Firebase auth service 
       fire.auth()
+       // asynchronously signs in using an email and password.
         .signInWithEmailAndPassword(email, password)
         .then(repsponse => {
           const {user} = repsponse;
@@ -84,11 +86,14 @@ const LoginForm = (props) => {
             email: user.email
           }
           console.log(data);
+          /* Sets the value of the pair identified by key to value, 
+          creating a new key/value pair if none existed for key previously.*/
           localStorage.setItem('User', JSON.stringify(data));
           const storage = localStorage.getItem('user');
           const loggedInUser = storage !== null ? JSON.parse(storage) : null;
           props.loggedIn(loggedInUser);
           setLoading(false);
+          //catch error if the email address and password do not match.
         }).catch(error => {
           toast.error(error.message);
           setLoading(false);

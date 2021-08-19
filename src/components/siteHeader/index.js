@@ -19,54 +19,55 @@ const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
 }));
 
-const SiteHeader = ( {history}, props ) => {
-    const classes = useStyles();
-    const[auth, setAuth] = React.useState(true);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+const SiteHeader = ({ history, loggedIn }, props) => {
+  const classes = useStyles();
+  const [auth, setAuth] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-    let menuOptions;
+  let menuOptions;
 
-
-      menuOptions = [
+  loggedIn
+    ? (menuOptions = [
         { label: "Home", path: "/home" },
         { label: "Upcoming", path: "/movies/upcoming" },
         { label: "Favorites", path: "/movies/favorites" },
         { label: "Top Rated", path: "/movies/topRatedMovies" },
         { label: "PlayList", path: "/movies/playlist" },
-        { label: "Kids", path: "/" },
-      ];
-  
-    const handleMenuSelect = (pageURL) => {
-      history.push(pageURL);
-    };
+        { label: "Logout", path: "/" },
+      ])
+    : (menuOptions = []);
 
-    const handleMenu = (event) => {
-      setAnchorEl(event.currentTarget);
+  const handleMenuSelect = (pageURL) => {
+    history.push(pageURL);
   };
 
-    const handleClose = () => {
-      localStorage.removeItem('user');
-      props.setUserState();
-      setAnchorEl(null);
-    }
-  
-    return (
-      <>
-        <AppBar position="fixed" color="secondary">
-          <Toolbar>
-            <Typography variant="h4" className={classes.title}>
-              TMDB Client
-            </Typography>
-            <Typography variant="h6" className={classes.title}>
-              Explore movies and TV shows
-            </Typography>
-            { auth && (
-               <div>
-                   {isMobile ? (
-                  <>
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    localStorage.removeItem("user");
+    props.setUserState();
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <AppBar position="fixed" color="secondary">
+        <Toolbar>
+          <Typography variant="h4" className={classes.title}>
+            TMDB Client
+          </Typography>
+          <Typography variant="h6" className={classes.title}>
+            Explore movies and TV shows
+          </Typography>
+          {auth && (
+            <div>
+              {isMobile ? (
+                <>
                   <IconButton
                     aria-label="menu"
                     aria-controls="menu-appbar"
@@ -90,7 +91,7 @@ const SiteHeader = ( {history}, props ) => {
                     }}
                     open={open}
                     onClose={handleClose}
-                    >
+                  >
                     {menuOptions.map((opt) => (
                       <MenuItem
                         key={opt.label}
@@ -102,7 +103,7 @@ const SiteHeader = ( {history}, props ) => {
                     <MenuItem onClick={handleClose}>Logout</MenuItem>
                   </Menu>
                 </>
-               ) : (
+              ) : (
                 <>
                   {menuOptions.map((opt) => (
                     <Button
@@ -114,16 +115,14 @@ const SiteHeader = ( {history}, props ) => {
                     </Button>
                   ))}
                 </>
-               
               )}
-               </div>
-            
-            )}
-          </Toolbar>
-        </AppBar>
-        <div className={classes.offset} />
-      </>
-    );
-  };
-  
-  export default withRouter(SiteHeader);
+            </div>
+          )}
+        </Toolbar>
+      </AppBar>
+      <div className={classes.offset} />
+    </>
+  );
+};
+
+export default withRouter(SiteHeader);

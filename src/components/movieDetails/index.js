@@ -113,13 +113,16 @@ const MovieDetails = ({ movie, credits, video }) => {
           </Grid>
         ))}
       </Grid>
+      {/*Parse the 'key' attribute from video json data and open movie trailer */}      
       <Button
         className={classes.youtube}
         variant="contained"
         startIcon={<YouTubeIcon />}
         color="secondary"
-        target=""
-        href={`https://www.youtube.com/watch?v=${video.results[0].key}`}
+        //onClick={video.key}
+        //disbaled={video.key !== null ? false : true}
+        //color={video.key !== null ? "grey": "secondary"}
+        href={`https://www.youtube.com/watch?v=${video.results[0].key}`} 
       >
         Watch the Trailer
       </Button>
@@ -139,6 +142,7 @@ const MovieDetails = ({ movie, credits, video }) => {
         onClose={() => setDrawerOpen(false)}
       >
         <MovieReviews movie={movie} />
+        {/*<Button video={video.results[0].key} />*/}
       </Drawer>
     </>
   );

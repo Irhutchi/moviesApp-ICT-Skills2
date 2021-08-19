@@ -6,7 +6,7 @@ import WriteReview from "../components/cardIcons/writeReview";
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
-
+import SiteHeader from "../components/siteHeader";
 const FavoriteMoviesPage = (props) => {
   const { favorites: movieIds } = useContext(MoviesContext);
 
@@ -34,6 +34,7 @@ const FavoriteMoviesPage = (props) => {
       action={(movie) => {
         return (
           <>
+          <SiteHeader loggedIn={true} />
             <RemoveFromFavorites movie={movie} />
             <WriteReview movie={movie} />
           </>

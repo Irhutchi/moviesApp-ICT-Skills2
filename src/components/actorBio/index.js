@@ -1,12 +1,10 @@
 import React from "react";
 import {
   Grid,
-  GridList,
   List,
   ListItem,
   ListItemText,
   Typography,
-  Paper,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";

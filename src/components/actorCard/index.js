@@ -6,8 +6,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import { Typography } from "@material-ui/core";
 import img from "../../images/film-poster-placeholder.png";
-import { Link } from "react-router-dom";
-import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 
 const useStyles = makeStyles((theme) => ({
   card: { maxWidth: 274 },

@@ -26,10 +26,10 @@ const Scroll = ({showBelow}) => {
       window[`scrollTo`]({ top: 0, behavior:`smooth`})
    }
 
-   {/*use show state to determine whether to or not to show scroll button */}
+   //use show state to determine whether to or not to show scroll button 
    const [show, setShow] =useState(showBelow ? false : true)
 
-   {/*compare window offset with the show below value passed in */}
+   //compare window offset with the show below value passed in 
    const handleScroll = () => {
       if (window.pageYOffset > showBelow) {
          if (!show) setShow(true)
@@ -38,7 +38,7 @@ const Scroll = ({showBelow}) => {
       }
    }
 
-   {/*add an event listener of scroll and handle scroll func when page loads */}
+   //add an event listener of scroll and handle scroll func when page loads
    useEffect(() => {
       window.addEventListener(`scroll`, handleScroll)
       return () => {
