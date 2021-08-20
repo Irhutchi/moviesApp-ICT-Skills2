@@ -1,5 +1,5 @@
 import React from "react";
-import SampleActor from "./sampleData2";
+import SampleActor from "./sampleData";
 import { MemoryRouter } from "react-router";
 import MoviesContextProvider from "../contexts/moviesContext";
 import ActorCard from "../components/actorCard";
@@ -13,7 +13,7 @@ export default {
   ],
 };
 
-export const Basic = () =>  <ActorCard actor={SampleActor}/>
+export const Basic = () =>  <ActorCard actor={SampleActor.actor}/>
 
 Basic.storyName = "Default";
 

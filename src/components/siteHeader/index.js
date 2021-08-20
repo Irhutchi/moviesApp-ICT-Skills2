@@ -65,7 +65,7 @@ const SiteHeader = ({ history, loggedIn }, props) => {
             Explore movies and TV shows
           </Typography>
           {auth && (
-            <div>
+            <>
               {isMobile ? (
                 <>
                   <IconButton
@@ -116,7 +116,7 @@ const SiteHeader = ({ history, loggedIn }, props) => {
                   ))}
                 </>
               )}
-            </div>
+            </>
           )}
         </Toolbar>
       </AppBar>
