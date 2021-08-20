@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
-
 import MenuIcon from "@material-ui/icons/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
@@ -20,39 +19,53 @@ const useStyles = makeStyles((theme) => ({
   offset: theme.mixins.toolbar,
 }));
 
-const SiteHeader = ( { history }) => {
-    const classes = useStyles();
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  
-    const menuOptions = [
-      { label: "Home", path: "/" },
-      { label: "Upcoming", path: "/movies/upcoming" },
-      { label: "Favorites", path: "/movies/favorites" },
-      { label: "Option 3", path: "/" },
-      { label: "Option 4", path: "/" },
-    ];
-  
-    const handleMenuSelect = (pageURL) => {
-      history.push(pageURL);
-    };
-  
-    const handleMenu = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-  
-    return (
-      <>
-        <AppBar position="fixed" color="secondary">
-          <Toolbar>
-            <Typography variant="h4" className={classes.title}>
-              TMDB Client
-            </Typography>
-            <Typography variant="h6" className={classes.title}>
-              Explore movies and TV shows
-            </Typography>
+const SiteHeader = ({ history, loggedIn }, props) => {
+  const classes = useStyles();
+  const [auth, setAuth] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  let menuOptions;
+
+  loggedIn
+    ? (menuOptions = [
+        { label: "Home", path: "/home" },
+        { label: "Upcoming", path: "/movies/upcoming" },
+        { label: "Favorites", path: "/movies/favorites" },
+        { label: "Top Rated", path: "/movies/topRatedMovies" },
+        { label: "PlayList", path: "/movies/playlist" },
+        { label: "Logout", path: "/" },
+      ])
+    : (menuOptions = []);
+
+  const handleMenuSelect = (pageURL) => {
+    history.push(pageURL);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    localStorage.removeItem("user");
+    props.setUserState();
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <AppBar position="fixed" color="secondary">
+        <Toolbar>
+          <Typography variant="h4" className={classes.title}>
+            TMDB Client
+          </Typography>
+          <Typography variant="h6" className={classes.title}>
+            Explore movies and TV shows
+          </Typography>
+          {auth && (
+            <>
               {isMobile ? (
                 <>
                   <IconButton
@@ -77,7 +90,7 @@ const SiteHeader = ( { history }) => {
                       horizontal: "right",
                     }}
                     open={open}
-                    onClose={() => setAnchorEl(null)}
+                    onClose={handleClose}
                   >
                     {menuOptions.map((opt) => (
                       <MenuItem
@@ -87,6 +100,7 @@ const SiteHeader = ( { history }) => {
                         {opt.label}
                       </MenuItem>
                     ))}
+                    <MenuItem onClick={handleClose}>Logout</MenuItem>
                   </Menu>
                 </>
               ) : (
@@ -102,11 +116,13 @@ const SiteHeader = ( { history }) => {
                   ))}
                 </>
               )}
-          </Toolbar>
-        </AppBar>
-        <div className={classes.offset} />
-      </>
-    );
-  };
-  
-  export default withRouter(SiteHeader);
+            </>
+          )}
+        </Toolbar>
+      </AppBar>
+      <div className={classes.offset} />
+    </>
+  );
+};
+
+export default withRouter(SiteHeader);

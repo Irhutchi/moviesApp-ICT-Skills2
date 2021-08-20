@@ -10,6 +10,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import MovieReviews from "../movieReviews";
+import { Button } from "@material-ui/core";
+import YouTubeIcon from "@material-ui/icons/YouTube";
+import { useHistory } from "react-router-dom";
+import { Grid } from "@material-ui/core";
+import ActorCard from "../actorCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,11 +33,30 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
+  youtube: {
+    display: "flex",
+    justifyContent: "center",
+    padding: theme.spacing(1.5),
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
-const MovieDetails = ({ movie }) => {
+const MovieDetails = ({ movie, credits, video }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const history = useHistory();
+  //const [video, setVideo] = useState();
+  
+  let castMembers = credits.cast;
+  castMembers = castMembers.slice(0, 8);
+
+  //let videos = video.id;
+
+  const handleClick = (actor) => {
+    history.push(`/actor/${actor.id}`);
+  };
 
   return (
     <>
@@ -40,7 +64,7 @@ const MovieDetails = ({ movie }) => {
         Overview
       </Typography>
 
-      <Typography variant="h6" component="p">
+      <Typography variant="body1" component="p">
         {movie.overview}
       </Typography>
 
@@ -81,6 +105,28 @@ const MovieDetails = ({ movie }) => {
           </li>
         ))}
       </Paper>
+      <Grid container className={classes.root} spacing={2}>
+        {/* loop over the actors */}
+        {castMembers.map((actor) => (
+          <Grid item key={actor.name} onClick={()=> handleClick(actor)} xs={12} sm={6} md={4} lg={3} xl={2}>
+            <ActorCard actor={actor} />
+          </Grid>
+        ))}
+      </Grid>
+      {/*Parse the 'key' attribute from video json data and open movie trailer */}      
+      <Button
+        className={classes.youtube}
+        variant="contained"
+        startIcon={<YouTubeIcon />}
+        color="secondary"
+        //onClick={video.key}
+        //disbaled={video.key !== null ? false : true}
+        //color={video.key !== null ? "grey": "secondary"}
+        href={`https://www.youtube.com/watch?v=${video.results[0].key}`} 
+      >
+        Watch the Trailer
+      </Button>
+
       <Fab
         color="secondary"
         variant="extended"
@@ -96,6 +142,7 @@ const MovieDetails = ({ movie }) => {
         onClose={() => setDrawerOpen(false)}
       >
         <MovieReviews movie={movie} />
+        {/*<Button video={video.results[0].key} />*/}
       </Drawer>
     </>
   );

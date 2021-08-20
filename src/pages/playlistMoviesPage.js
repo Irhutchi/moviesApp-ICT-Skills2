@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
-import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
-import WriteReview from "../components/cardIcons/writeReview";
 import { useQueries } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
+import RemoveFromPlaylist from "../components/cardIcons/removeFromPlaylist";
+import WriteReview from "../components/cardIcons/writeReview";
 import SiteHeader from "../components/siteHeader";
-const FavoriteMoviesPage = (props) => {
-  const { favorites: movieIds } = useContext(MoviesContext);
+
+const PlaylistMoviesPage = () => {
+  const { playlist: movieIds } = useContext(MoviesContext);
 
   // Create an array of queries and run in parallel.
-  const favoriteMovieQueries = useQueries(
+  const playlistMovieQueries = useQueries(
     movieIds.map((movieId) => {
       return {
         queryKey: ["movie", { id: movieId }],
@@ -20,22 +21,22 @@ const FavoriteMoviesPage = (props) => {
     })
   );
   // Check if any of the parallel queries is still loading.
-  const isLoading = favoriteMovieQueries.find((m) => m.isLoading === true);
+  const isLoading = playlistMovieQueries.find((m) => m.isLoading === true);
 
   if (isLoading) {
     return <Spinner />;
   }
-  const movies = favoriteMovieQueries.map((q) => q.data);
+  const movies = playlistMovieQueries.map((q) => q.data);
 
   return (
     <PageTemplate
-      title="Favourite Movies"
+      title="Movies Playlist"
       movies={movies}
       action={(movie) => {
         return (
           <>
-          <SiteHeader loggedIn={true} />
-            <RemoveFromFavorites movie={movie} />
+            <SiteHeader loggedIn={true} />
+            <RemoveFromPlaylist movie={movie} />
             <WriteReview movie={movie} />
           </>
         );
@@ -44,4 +45,4 @@ const FavoriteMoviesPage = (props) => {
   );
 };
 
-export default FavoriteMoviesPage;
+export default PlaylistMoviesPage;
