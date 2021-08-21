@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
+// pass in a movie, credits and video props
 const MovieDetails = ({ movie, credits, video }) => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -72,6 +72,7 @@ const MovieDetails = ({ movie, credits, video }) => {
         <li>
           <Chip label="Genres" className={classes.chip} color="primary" />
         </li>
+         {/* use map func to loop over the genres array - display genre names  */}
         {movie.genres.map((g) => (
           <li key={g.name}>
             <Chip label={g.name} className={classes.chip} />
@@ -99,6 +100,7 @@ const MovieDetails = ({ movie, credits, video }) => {
             color="primary"
           />
         </li>
+         {/* use map func to loop over the production_countries array - display production countries */}
         {movie.production_countries.map((p) => (
           <li key={p.name}>
             <Chip label={p.name} className={classes.chip} />
@@ -106,7 +108,7 @@ const MovieDetails = ({ movie, credits, video }) => {
         ))}
       </Paper>
       <Grid container className={classes.root} spacing={2}>
-        {/* loop over the actors */}
+        {/* use map func to loop over the actor array - display actor name */}
         {castMembers.map((actor) => (
           <Grid item key={actor.name} onClick={()=> handleClick(actor)} xs={12} sm={6} md={4} lg={3} xl={2}>
             <ActorCard actor={actor} />
@@ -119,9 +121,6 @@ const MovieDetails = ({ movie, credits, video }) => {
         variant="contained"
         startIcon={<YouTubeIcon />}
         color="secondary"
-        //onClick={video.key}
-        //disbaled={video.key !== null ? false : true}
-        //color={video.key !== null ? "grey": "secondary"}
         href={`https://www.youtube.com/watch?v=${video.results[0].key}`} 
       >
         Watch the Trailer
@@ -142,7 +141,6 @@ const MovieDetails = ({ movie, credits, video }) => {
         onClose={() => setDrawerOpen(false)}
       >
         <MovieReviews movie={movie} />
-        {/*<Button video={video.results[0].key} />*/}
       </Drawer>
     </>
   );
