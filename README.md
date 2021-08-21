@@ -3,9 +3,9 @@
 **Name: Ian Hutchinson**
 
 ## Overview 
-The Movie Fan App is a responsive SPA for moview enthusiasts. [React](https://reactjs.org/) app that allows users to search, view and tag their favourite movies. Users can also view their favourite actors and see more information about them.
-Material UI framework is utilised to style this app.
-The data for the app will be retrieved from an open web API, [The Movie DataBase (TMDb)](https://www.themoviedb.org/).
+The Movie Fan App is a responsive SPA for movie enthusiasts. [React](https://reactjs.org/) app that allows users to search, view and tag their favourite movies. The app enables users to securely sign-up and login using Firebase authentication. You can view detailed information of your favourite actors with their own dedicated page.
+[Material UI](https://material-ui.com/getting-started/usage/) framework is utilised to style this app.
+The data for the app is retrieved from an open web API, [The Movie DataBase (TMDb)](https://www.themoviedb.org/).
 
 :movie_camera: Try out this app for yourself [here](https://tmdb-movie-app-38769.web.app/)
 
@@ -17,7 +17,7 @@ The data for the app will be retrieved from an open web API, [The Movie DataBase
 - Show the full review text for a review.
 - Add movies to your favourites list.
 - Write a review for one of your favourites.
-- Firebase Authentication, partially implemented (bugs!)
+- Firebase Authentication, partially implemented
 - Add movies to your playlist.
 - Pagination component enables user to select a specific page
 - User can watch movie trailer linked to Youtube 
@@ -42,7 +42,7 @@ To run this project yourself: <br>
   7. Sign up for a Firbase account [here](https://firebase.google.com/)
   8. Log into your Firebase account, follow these steps:
      + create new project > insert project name > click create project > Register app > add app nickname > click register app > add Firebase SDK > Copy your key details.
-  7. Add your Firebase credentials to `.env` file.
+  9. Add your Firebase credentials to `.env` file.
   ```
   REACT_APP_FIREBASE_API_KEY=... API key value ...
   REACT_APP_FIREBASE_AUTH_DOMAIN=... etc ...
@@ -52,10 +52,8 @@ To run this project yourself: <br>
   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
   REACT_APP_FIREBASE_APP_ID
   ```
-  <br>
-  4. Type the command: `npm start`
- <br>
-  5. Open your browser at: `http://localhost:3000`
+  10. Type the command: `npm start` <br>
+  11. Open your browser at: `http://localhost:3000`
 
 The server responds with public.index.html, follwed by relevant assets (transpiled JS, CSS etc.)
 
@@ -202,29 +200,34 @@ profile_path: "/wbrVVJRr5TwhDZuvijBgOorzcAb.jpg"
 ```
 ### Component catalogue
 
+**Storybook View** <br>
+Boxes higlighted in yellow indicate additional stories since assignment one. <br>
+![](https://github.com/Irhutchi/moviesApp-ICT-Skills2/blob/master/src/images/storybook.png)
 
 
 
-### UI Design.
+### UI Design - Sample Views
 
 **Home Page**
-![](https://ict-skills-2020-2.netlify.app/topic02/book-3/img/home.png)
+![](https://github.com/Irhutchi/moviesApp-ICT-Skills2/blob/master/src/images/home.png)
 <br>
 **Movies can be filtered by genre**
-![](https://ict-skills-2020-2.netlify.app/topic02/book-3/img/filtering.png)
+![](https://github.com/Irhutchi/moviesApp-ICT-Skills2/blob/master/src/images/FilterGenre.png)
 <br>
 **Movies Detail Page**
-![](https://ict-skills-2020-2.netlify.app/topic02/book-3/img/details.png)
+![](https://github.com/Irhutchi/moviesApp-ICT-Skills2/blob/master/src/images/movieDetails.png)
 <br>
 **Extract from all reviews**
-![](https://ict-skills-2020-2.netlify.app/topic02/book-3/img/extracts.png)
+![](https://github.com/Irhutchi/moviesApp-ICT-Skills2/blob/master/src/images/reviewExtract.png)
 <br>
 **Favourite Page**
-![](https://ict-skills-2020-2.netlify.app/topic02/book-3/img/favourites.png)
+![](https://github.com/Irhutchi/moviesApp-ICT-Skills2/blob/master/src/images/favouritePage.png)
+<br>
+**Actor Details**
+![](https://github.com/Irhutchi/moviesApp-ICT-Skills2/blob/master/src/images/ActorBiography.pngv)
 
 ### Routing
 
-+ 
 + GET / - displays authentication page.
 + GET /home - displays all movies.
 + GET /login - login to firebase backend
@@ -242,7 +245,7 @@ profile_path: "/wbrVVJRr5TwhDZuvijBgOorzcAb.jpg"
 
 **Pagination**  is implemented using [Material UI](https://material-ui.com/components/pagination/#pagination) component. To reduce the workload on the back-end server, data is cached locally. If the user returns to or refreshes a page, react-query library will force cache re-request data from TMDB API immediately. This reduces latency by reducing the number HTTP requests. 
 
-**Display Movie Trailer**: The [GetVideos](https://developers.themoviedb.org/3/movies/get-movies-videos) endpoint was used to retrieve video json data. Each movie could have many trailers. A different method is used relative to others to retrieve the specific YouTube `key` value from the array. I learned about appending to repsonse query. The first key value from the first occurrence in the array is appended and user is directed to view trailer on YouTube.
+**Display Movie Trailer**: The [GetVideos](https://developers.themoviedb.org/3/movies/get-movies-videos) endpoint was used to retrieve video json data. Each movie could have many trailers. A different method is used relative to others to retrieve the specific YouTube `key` value from the array. I learned about appending to repsonse query. The first key value from the first occurrence in the array is appended the trailer URL to render the correct trailer on YouTube.
 
 **Firebase Authentication** is used to secure access credentials of users. Refer to reference [3] below for tutorial used as a guide. Although users can sign up successfully, implentation is only partially successful. IS with state managemnt causing issues.
 
@@ -253,13 +256,13 @@ Regarding UI styling decisions, I delved into the concept of Order and inheriten
 
 ## References
 
- [1] Initial project structure by: [Diarmuid O'Connor](doconnor@wit.ie)
- [2] [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction)
- [3] [React Docs](https://reactjs.org/docs/getting-started.html) 
- [4] [Firebase Authentication](https://youtu.be/dJA3zqokc_c)
- [5] [Firebase Deployment](https://youtu.be/1wZw7RvXPRU)
- [6] [Pagination](https://material-ui.com/components/pagination/)
- [7] [Display Movie trailer](https://material-ui.com/components/pagination/)
+ [1] Initial project structure by: [Diarmuid O'Connor](doconnor@wit.ie) <br>
+ [2] [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction) <br>
+ [3] [React Docs](https://reactjs.org/docs/getting-started.html) <br>
+ [4] [Firebase Authentication](https://youtu.be/dJA3zqokc_c) <br>
+ [5] [Firebase Deployment](https://youtu.be/1wZw7RvXPRU) <br>
+ [6] [Pagination](https://material-ui.com/components/pagination/) <br>
+ [7] [Display Movie trailer](https://material-ui.com/components/pagination/) <br>
  [8] [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Window/pageYOffset) 
 
 ## Author
