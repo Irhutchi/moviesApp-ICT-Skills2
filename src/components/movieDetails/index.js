@@ -58,6 +58,46 @@ const MovieDetails = ({ movie, credits, video }) => {
     history.push(`/actor/${actor.id}`);
   };
 
+  //Use console log to see the video prop output
+  console.log(video)
+
+  // Once you know the video output and that the results holds the trailers
+  // Console log as a test, if video.results exists print yes else no
+  // If a movie has no tailer I presume video.results will not exists
+  if(video.results){
+    console.log("yes")
+  }else{
+    console.log("no")
+  }
+  // If results always exists but trailer does not check it as video.results[0].key
+  if(video.results[0].key){
+    console.log("yes")
+  }else{
+    console.log("no")
+  }
+  // The for the button it would be 
+  // Basing the logic if it does not exist by using !
+  // disabled={!video.results}
+  //       color={!video.results ? "grey": "secondary"}
+  //or
+  // disabled={!video.results[0].key}
+  //       color={!video.results[0].key ? "grey": "secondary"}
+
+  //You can also then change the text of the button
+  //{!video.results ? "No Trailer Available" : "Watch the Trailer"}
+
+  //or you could remove the button by doing something like
+  //{!video.results ? <Button
+//   className={classes.youtube}
+//   variant="contained"
+//   startIcon={<YouTubeIcon />}
+//   color="secondary"
+//   href={`https://www.youtube.com/watch?v=${video.results[0].key}`} 
+// >
+//   {!video.results ? "No Trailer Available" : "Watch the Trailer"}
+// </Button>
+// : ""}
+
   return (
     <>
       <Typography variant="h5" component="h3">
@@ -120,11 +160,11 @@ const MovieDetails = ({ movie, credits, video }) => {
         startIcon={<YouTubeIcon />}
         color="secondary"
         //onClick={video.key}
-        //disbaled={video.key !== null ? false : true}
-        //color={video.key !== null ? "grey": "secondary"}
+        disabled={!video.results}
+        color={!video.results ? "grey": "secondary"}
         href={`https://www.youtube.com/watch?v=${video.results[0].key}`} 
       >
-        Watch the Trailer
+        {!video.results ? "No Trailer Available" : "Watch the Trailer"}
       </Button>
 
       <Fab
